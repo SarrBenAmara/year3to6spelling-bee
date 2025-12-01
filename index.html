@@ -275,6 +275,29 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
 
+    .btn-home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+      color: white;
+      border: 3px solid #D32F2F;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      font-family: inherit;
+      z-index: 100;
+    }
+
+    .btn-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
     .feedback-message {
       position: absolute;
       top: 50%;
@@ -332,6 +355,160 @@
       z-index: 0;
     }
 
+    .start-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 20px;
+    }
+
+    .start-screen.hidden {
+      display: none;
+    }
+
+    .start-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      border: 4px solid #FFA500;
+    }
+
+    .start-title {
+      font-size: 2.5em;
+      color: #FFA500;
+      text-shadow: 3px 3px 0 #000000;
+      margin: 0 0 30px 0;
+      font-weight: bold;
+    }
+
+    .start-bee {
+      font-size: 4em;
+      margin-bottom: 20px;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .name-input-group {
+      margin-bottom: 30px;
+    }
+
+    .name-label {
+      font-size: 1.2em;
+      color: #000000;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 1.2em;
+      border: 3px solid #FFD700;
+      border-radius: 15px;
+      font-family: inherit;
+      text-align: center;
+      background: #FFF9E6;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .name-input:focus {
+      outline: none;
+      border-color: #FFA500;
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+    }
+
+    .round-selection-label {
+      font-size: 1.2em;
+      color: #000000;
+      font-weight: bold;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .round-selection-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .btn-select-round {
+      padding: 15px 35px;
+      font-size: 1.3em;
+      font-weight: bold;
+      border: 3px solid #FF8C00;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-family: inherit;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
+      color: #000000;
+    }
+
+    .btn-select-round:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-select-round.selected {
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      border-color: #000000;
+      color: #000000;
+      transform: scale(1.05);
+    }
+
+    .btn-start-game {
+      padding: 18px 50px;
+      font-size: 1.4em;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      font-family: inherit;
+      background: linear-gradient(135deg, #4CAF50 0%, #45A049 100%);
+      color: white;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-start-game:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-start-game:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .player-name-display {
+      font-size: 1.1em;
+      color: #000000;
+      font-weight: bold;
+      background: rgba(255, 215, 0, 0.3);
+      padding: 8px 15px;
+      border-radius: 15px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
 
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -349,11 +526,25 @@
     </defs> <rect width="100%" height="100%" fill="url(#hexagons)" />
    </svg>
   </div>
-  <div class="game-container">
+  <div class="start-screen" id="startScreen">
+   <div class="start-content">
+    <div class="start-bee">
+     🐝
+    </div>
+    <h1 class="start-title">Buzzing Bee Word Builder</h1>
+    <div class="name-input-group"><label for="playerNameInput" class="name-label">Enter Your Name</label> <input type="text" id="playerNameInput" class="name-input" placeholder="Type your name here..." maxlength="20">
+    </div>
+    <div class="round-selection-label">
+     Choose Your Round
+    </div>
+    <div class="round-selection-buttons"><button class="btn-select-round selected" id="selectRound1">Round 1</button> <button class="btn-select-round" id="selectRound2">Round 2</button>
+    </div><button class="btn-start-game" id="startGameBtn" disabled>Start Game 🚀</button>
+   </div>
+  </div>
+  <div class="game-container"><button class="btn-home" id="homeBtn">🏠 Home</button>
    <div class="header">
-    <h1 class="game-title" id="gameTitle">🐝 Buzzing Bee Word Builder ��</h1>
-    <div class="instruction" id="instructionText">
-     Drag letters to complete the word!
+    <h1 class="game-title" id="gameTitle">🐝 Buzzing Bee Word Builder 🐝</h1>
+    <div><span class="player-name-display" id="playerNameDisplay"></span> <span class="instruction" id="instructionText">Drag letters to complete the word!</span>
     </div>
    </div>
    <div class="score-board">
@@ -416,6 +607,9 @@
     let draggedElement = null;
     let touchStartX = 0;
     let touchStartY = 0;
+    let playerName = '';
+    let selectedRound = 1;
+    let gameStarted = false;
 
     function shuffleArray(array) {
       const newArray = [...array];
@@ -429,15 +623,11 @@
     function getNextWord() {
       if (currentRound === 1) {
         if (round1Index >= round1Words.length) {
-          // Move to round 2
-          currentRound = 2;
-          round2Index = 0;
-          return round2Words[round2Index++];
+          return null;
         }
         return round1Words[round1Index++];
       } else {
         if (round2Index >= round2Words.length) {
-          // Game complete
           return null;
         }
         return round2Words[round2Index++];
@@ -517,12 +707,11 @@
       });
 
       document.getElementById('nextBtn').disabled = true;
-      updateRoundDisplay();
     }
 
     function showGameComplete() {
       const feedback = document.getElementById('feedbackMessage');
-      feedback.textContent = '🎉 All Rounds Complete! 🎉';
+      feedback.textContent = '🎉 All Words Complete! 🎉';
       feedback.style.fontSize = '2.5em';
       feedback.classList.add('show');
       
@@ -532,19 +721,6 @@
         feedback.classList.remove('show');
         feedback.style.fontSize = '3em';
       }, 3000);
-    }
-
-    function updateRoundDisplay() {
-      const titleElement = document.getElementById('gameTitle');
-      const config = window.elementSdk && window.elementSdk.config ? window.elementSdk.config : defaultConfig;
-      const baseTitle = config.game_title || defaultConfig.game_title;
-      
-      if (currentRound === 2 && round2Index === 1) {
-        const feedback = document.getElementById('feedbackMessage');
-        feedback.textContent = '🎯 Round 2! 🎯';
-        feedback.classList.add('show');
-        setTimeout(() => feedback.classList.remove('show'), 2000);
-      }
     }
 
     function handleDragStart(e) {
@@ -688,9 +864,11 @@
 
     document.getElementById('restartBtn').addEventListener('click', () => {
       honeyCount = 0;
-      currentRound = 1;
-      round1Index = 0;
-      round2Index = 0;
+      if (currentRound === 1) {
+        round1Index = 0;
+      } else {
+        round2Index = 0;
+      }
       document.getElementById('honeyCount').textContent = honeyCount;
       document.getElementById('nextBtn').style.display = 'inline-block';
       initializeWord();
@@ -716,6 +894,65 @@
       document.getElementById('restartBtnText').textContent = config.restart_button_text || defaultConfig.restart_button_text;
     }
 
+    // Start screen functionality
+    const playerNameInput = document.getElementById('playerNameInput');
+    const startGameBtn = document.getElementById('startGameBtn');
+    const selectRound1Btn = document.getElementById('selectRound1');
+    const selectRound2Btn = document.getElementById('selectRound2');
+    const startScreen = document.getElementById('startScreen');
+
+    playerNameInput.addEventListener('input', (e) => {
+      playerName = e.target.value.trim();
+      startGameBtn.disabled = playerName.length === 0;
+    });
+
+    playerNameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && playerName.length > 0) {
+        startGame();
+      }
+    });
+
+    selectRound1Btn.addEventListener('click', () => {
+      selectedRound = 1;
+      selectRound1Btn.classList.add('selected');
+      selectRound2Btn.classList.remove('selected');
+    });
+
+    selectRound2Btn.addEventListener('click', () => {
+      selectedRound = 2;
+      selectRound2Btn.classList.add('selected');
+      selectRound1Btn.classList.remove('selected');
+    });
+
+    startGameBtn.addEventListener('click', startGame);
+
+    function startGame() {
+      if (playerName.length === 0) return;
+      
+      gameStarted = true;
+      currentRound = selectedRound;
+      
+      if (selectedRound === 1) {
+        round1Index = 0;
+      } else {
+        round2Index = 0;
+      }
+      
+      document.getElementById('playerNameDisplay').textContent = '👤 ' + playerName;
+      startScreen.classList.add('hidden');
+      initializeWord();
+    }
+
+    document.getElementById('homeBtn').addEventListener('click', () => {
+      startScreen.classList.remove('hidden');
+      honeyCount = 0;
+      round1Index = 0;
+      round2Index = 0;
+      document.getElementById('honeyCount').textContent = honeyCount;
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      gameStarted = false;
+    });
+
     if (window.elementSdk) {
       window.elementSdk.init({
         defaultConfig,
@@ -735,8 +972,6 @@
         ])
       });
     }
-
-    initializeWord();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a70cf0d52c8ee86',t:'MTc2NDU3MzQ4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a70ec4c5459edce',t:'MTc2NDU3NDY4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
