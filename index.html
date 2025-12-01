@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buzzing Bee Word Builder</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    html, body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+      background: #87CEEB;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+/* ⭐ LOGO — added */
+    .page-logo {
+      position: fixed;
+      top: 80px;
+      right: 80px;
+      width: 200px;
+      height: auto;
+      z-index: 999;
+    }
+    .game-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 20px 30px 20px;
+      justify-content: space-between;
+    }
+
+    .header {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .game-title {
+      font-size: 2.2em;
+      color: #FFA500;
+      text-shadow: 3px 3px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
+      margin: 0 0 12px 0;
+      font-weight: bold;
+    }
+
+    .instruction {
+      font-size: 1.1em;
+      color: #000000;
+      background: rgba(255, 215, 0, 0.9);
+      padding: 10px 20px;
+      border-radius: 25px;
+      display: inline-block;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 3px solid #FFA500;
+      font-weight: bold;
+    }
+
+    .score-board {
+      position: absolute;
+      top: 120px;
+      left: 20px;
+      background: rgba(255, 215, 0, 0.95);
+      padding: 15px 20px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      z-index: 100;
+      border: 3px solid #FFA500;
+    }
+
+    .honey-label {
+      font-size: 0.9em;
+      color: #000000;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .honey-count {
+      font-size: 2em;
+      color: #FFA500;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .game-area {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      margin: 20px 0;
+    }
+
+    .bee-container {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50% { transform: translateX(-50%) translateY(-15px); }
+    }
+
+    .bee-celebrate {
+      animation: celebrate 0.6s ease-in-out;
+    }
+
+    @keyframes celebrate {
+      0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg) scale(1); }
+      25% { transform: translateX(-50%) translateY(-20px) rotate(-15deg) scale(1.2); }
+      50% { transform: translateX(-50%) translateY(-30px) rotate(0deg) scale(1.3); }
+      75% { transform: translateX(-50%) translateY(-20px) rotate(15deg) scale(1.2); }
+    }
+
+    .flower-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .word-display {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 25px;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .letter-slots {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .letter-slot {
+      width: 60px;
+      height: 70px;
+      border: 3px dashed #FFD700;
+      border-radius: 12px;
+      background: #FFF9E6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #2C3E50;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .letter-slot.filled {
+      border: 3px solid #4CAF50;
+      background: #E8F5E9;
+    }
+
+    .letter-slot.correct {
+      animation: slotCorrect 0.5s ease;
+    }
+
+    @keyframes slotCorrect {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); background: #4CAF50; color: white; }
+    }
+
+    .draggable-letters {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .letter-tile {
+      width: 60px;
+      height: 70px;
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      border: 3px solid #FF8C00;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .letter-tile:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .letter-tile:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+
+    .letter-tile.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+
+    .letter-tile.placed {
+      display: none;
+    }
+
+    .controls {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      font-family: inherit;
+      margin: 0 8px;
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      color: #000000;
+      border: 3px solid #FF8C00;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-next:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
+      border-color: #666;
+      color: #333;
+    }
+
+    .btn-restart {
+      background: linear-gradient(135deg, #000000 0%, #333333 100%);
+      color: #FFD700;
+      border: 3px solid #FFD700;
+    }
+
+    .btn-restart:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .feedback-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      font-weight: bold;
+      color: #4CAF50;
+      text-shadow: 3px 3px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    .feedback-message.show {
+      animation: feedbackPop 1s ease-in-out;
+    }
+
+    @keyframes feedbackPop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .honey-drop {
+      position: absolute;
+      font-size: 2em;
+      pointer-events: none;
+      z-index: 150;
+      animation: honeyFall 1s ease-in-out forwards;
+    }
+
+    @keyframes honeyFall {
+      0% { opacity: 1; transform: translateY(0) scale(0); }
+      50% { transform: translateY(30px) scale(1.5); }
+      100% { opacity: 0; transform: translateY(60px) scale(1); }
+    }
+
+    .flower-wiggle {
+      animation: wiggle 0.5s ease-in-out;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .honeycomb-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+ <!-- ⭐ LOGO — added here -->
+  <img src="logo.png" class="page-logo" alt="Logo">
+  <div class="honeycomb-bg">
+   <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs>
+     <pattern id="hexagons" width="100" height="87" patternunits="userSpaceOnUse">
+      <polygon points="50,0 93.3,25 93.3,62 50,87 6.7,62 6.7,25" fill="none" stroke="#FFA500" stroke-width="2" />
+     </pattern>
+    </defs> <rect width="100%" height="100%" fill="url(#hexagons)" />
+   </svg>
+  </div>
+  <div class="game-container">
+   <div class="header">
+    <h1 class="game-title" id="gameTitle">🐝 Buzzing Bee Word Builder ��</h1>
+    <div class="instruction" id="instructionText">
+     Drag letters to complete the word!
+    </div>
+   </div>
+   <div class="score-board">
+    <div class="honey-label" id="honeyLabel">
+     Honey Collected
+    </div>
+    <div class="honey-count"><span id="honeyCount">0</span> <span>🍯</span>
+    </div>
+   </div>
+   <div class="game-area">
+    <div class="bee-container" id="beeContainer">
+     <svg width="80" height="80" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><!-- Bee Body --> <ellipse cx="50" cy="55" rx="22" ry="28" fill="#FFD700" /> <ellipse cx="50" cy="45" rx="18" ry="15" fill="#FFD700" /> <!-- Stripes --> <rect x="32" y="50" width="36" height="6" fill="#000" rx="3" /> <rect x="32" y="62" width="36" height="6" fill="#000" rx="3" /> <!-- Wings --> <ellipse cx="35" cy="40" rx="15" ry="20" fill="#E0F7FA" opacity="0.7" transform="rotate(-30 35 40)" /> <ellipse cx="65" cy="40" rx="15" ry="20" fill="#E0F7FA" opacity="0.7" transform="rotate(30 65 40)" /> <!-- Face --> <circle cx="43" cy="42" r="3" fill="#000" /> <circle cx="57" cy="42" r="3" fill="#000" /> <path d="M 45 50 Q 50 53 55 50" stroke="#000" stroke-width="2" fill="none" /> <!-- Antennae --> <line x1="45" y1="30" x2="42" y2="22" stroke="#000" stroke-width="2" /> <line x1="55" y1="30" x2="58" y2="22" stroke="#000" stroke-width="2" /> <circle cx="42" cy="22" r="3" fill="#FF6B35" /> <circle cx="58" cy="22" r="3" fill="#FF6B35" /> <!-- Pencil --> <rect x="60" y="60" width="8" height="25" fill="#FFD700" transform="rotate(30 64 72)" /> <polygon points="64,85 60,90 68,90" fill="#FF6B35" transform="rotate(30 64 87)" />
+     </svg>
+    </div>
+    <div class="flower-container" id="flowerContainer">
+     <svg width="120" height="120" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><!-- Flower petals --> <ellipse cx="60" cy="30" rx="15" ry="25" fill="#FF69B4" /> <ellipse cx="90" cy="60" rx="25" ry="15" fill="#FF1493" /> <ellipse cx="60" cy="90" rx="15" ry="25" fill="#FF69B4" /> <ellipse cx="30" cy="60" rx="25" ry="15" fill="#FF1493" /> <ellipse cx="80" cy="40" rx="18" ry="22" fill="#FFB6C1" transform="rotate(45 80 40)" /> <ellipse cx="80" cy="80" rx="18" ry="22" fill="#FFB6C1" transform="rotate(-45 80 80)" /> <ellipse cx="40" cy="80" rx="18" ry="22" fill="#FFB6C1" transform="rotate(45 40 80)" /> <ellipse cx="40" cy="40" rx="18" ry="22" fill="#FFB6C1" transform="rotate(-45 40 40)" /> <!-- Center --> <circle cx="60" cy="60" r="20" fill="#FFD700" /> <circle cx="60" cy="60" r="15" fill="#FFA500" />
+     </svg>
+     <div class="word-display">
+      <div class="letter-slots" id="letterSlots"></div>
+     </div>
+     <div class="draggable-letters" id="draggableLetters"></div>
+    </div>
+   </div>
+   <div class="controls"><button class="btn btn-next" id="nextBtn" disabled> <span id="nextBtnText">Next Word</span> 🌸 </button> <button class="btn btn-restart" id="restartBtn"> <span id="restartBtnText">Play Again</span> 🔄 </button>
+   </div>
+  </div>
+  <div class="feedback-message" id="feedbackMessage">
+   Excellent! 🌟
+  </div>
+  <script>
+    const defaultConfig = {
+      game_title: "🐝 Buzzing Bee Word Builder 🐝",
+      instruction_text: "Drag letters to complete the word!",
+      honey_jar_label: "Honey Collected",
+      next_button_text: "Next Word",
+      restart_button_text: "Play Again"
+    };
+
+    const round1Words = [
+      'rave', 'wonder', 'forest', 'pencil', 'danger', 'planet', 'scratch', 
+      'careful', 'famous', 'special', 'energy', 'holiday', 'weather', 'clever', 
+      'arrive', 'reason', 'secret', 'simple', 'modern', 'sudden', 'arrival', 
+      'collect', 'popular', 'borrow', 'teacher', 'confuse'
+    ];
+
+    const round2Words = [
+      'bright', 'whisper', 'travel', 'protect', 'quickly', 'bridge', 'healthy', 
+      'butterfly', 'describe', 'library', 'capture', 'subject', 'thunder', 
+      'recycle', 'mountain', 'adventure', 'include', 'dangerous', 'courage', 
+      'shadow', 'frozen', 'discover', 'island', 'protect', 'village', 'distance', 
+      'passenger', 'dangerous', 'decorate', 'prepare', 'activity', 'stretch', 'athlete'
+    ];
+
+    let currentRound = 1;
+    let currentWord = '';
+    let currentWordLetters = [];
+    let honeyCount = 0;
+    let round1Index = 0;
+    let round2Index = 0;
+    let draggedElement = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    function shuffleArray(array) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    }
+
+    function getNextWord() {
+      if (currentRound === 1) {
+        if (round1Index >= round1Words.length) {
+          // Move to round 2
+          currentRound = 2;
+          round2Index = 0;
+          return round2Words[round2Index++];
+        }
+        return round1Words[round1Index++];
+      } else {
+        if (round2Index >= round2Words.length) {
+          // Game complete
+          return null;
+        }
+        return round2Words[round2Index++];
+      }
+    }
+
+    function createMissingLettersChallenge(word) {
+      const wordArray = word.split('');
+      const middleIndex = Math.floor(word.length / 2);
+      const missingIndices = new Set();
+      
+      // Only show the middle letter, hide all others
+      wordArray.forEach((letter, index) => {
+        if (index !== middleIndex) {
+          missingIndices.add(index);
+        }
+      });
+
+      const display = wordArray.map((letter, index) => 
+        missingIndices.has(index) ? '_' : letter
+      );
+
+      const missing = Array.from(missingIndices).map(i => wordArray[i]);
+
+      return {
+        display,
+        draggable: shuffleArray([...missing]),
+        solution: wordArray
+      };
+    }
+
+    function initializeWord() {
+      currentWord = getNextWord();
+      
+      if (currentWord === null) {
+        // Game completed
+        showGameComplete();
+        return;
+      }
+
+      const challenge = createMissingLettersChallenge(currentWord);
+      currentWordLetters = challenge.solution;
+
+      const slotsContainer = document.getElementById('letterSlots');
+      slotsContainer.innerHTML = '';
+      
+      challenge.display.forEach((letter, index) => {
+        const slot = document.createElement('div');
+        slot.className = 'letter-slot';
+        slot.dataset.index = index;
+        
+        if (letter !== '_') {
+          slot.textContent = letter.toUpperCase();
+          slot.classList.add('filled');
+        }
+        
+        slotsContainer.appendChild(slot);
+      });
+
+      const draggableContainer = document.getElementById('draggableLetters');
+      draggableContainer.innerHTML = '';
+      
+      challenge.draggable.forEach((letter, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'letter-tile';
+        tile.textContent = letter.toUpperCase();
+        tile.dataset.letter = letter;
+        tile.draggable = true;
+        
+        tile.addEventListener('dragstart', handleDragStart);
+        tile.addEventListener('dragend', handleDragEnd);
+        tile.addEventListener('touchstart', handleTouchStart, { passive: false });
+        tile.addEventListener('touchmove', handleTouchMove, { passive: false });
+        tile.addEventListener('touchend', handleTouchEnd);
+        
+        draggableContainer.appendChild(tile);
+      });
+
+      document.getElementById('nextBtn').disabled = true;
+      updateRoundDisplay();
+    }
+
+    function showGameComplete() {
+      const feedback = document.getElementById('feedbackMessage');
+      feedback.textContent = '🎉 All Rounds Complete! 🎉';
+      feedback.style.fontSize = '2.5em';
+      feedback.classList.add('show');
+      
+      document.getElementById('nextBtn').style.display = 'none';
+      
+      setTimeout(() => {
+        feedback.classList.remove('show');
+        feedback.style.fontSize = '3em';
+      }, 3000);
+    }
+
+    function updateRoundDisplay() {
+      const titleElement = document.getElementById('gameTitle');
+      const config = window.elementSdk && window.elementSdk.config ? window.elementSdk.config : defaultConfig;
+      const baseTitle = config.game_title || defaultConfig.game_title;
+      
+      if (currentRound === 2 && round2Index === 1) {
+        const feedback = document.getElementById('feedbackMessage');
+        feedback.textContent = '🎯 Round 2! 🎯';
+        feedback.classList.add('show');
+        setTimeout(() => feedback.classList.remove('show'), 2000);
+      }
+    }
+
+    function handleDragStart(e) {
+      draggedElement = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', e.target.innerHTML);
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+    }
+
+    function handleTouchStart(e) {
+      draggedElement = e.target;
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      e.target.classList.add('dragging');
+      e.preventDefault();
+    }
+
+    function handleTouchMove(e) {
+      if (!draggedElement) return;
+      e.preventDefault();
+    }
+
+    function handleTouchEnd(e) {
+      if (!draggedElement) return;
+      
+      const touch = e.changedTouches[0];
+      const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      if (dropTarget && dropTarget.classList.contains('letter-slot') && !dropTarget.classList.contains('filled')) {
+        placeLetter(dropTarget, draggedElement);
+      }
+      
+      draggedElement.classList.remove('dragging');
+      draggedElement = null;
+    }
+
+    function placeLetter(slot, tile) {
+      const letter = tile.dataset.letter;
+      const index = parseInt(slot.dataset.index);
+      
+      slot.textContent = letter.toUpperCase();
+      slot.classList.add('filled');
+      slot.dataset.placedLetter = letter;
+      tile.classList.add('placed');
+
+      checkWord();
+    }
+
+    function checkWord() {
+      const slots = document.querySelectorAll('.letter-slot');
+      let allFilled = true;
+      let isCorrect = true;
+
+      slots.forEach((slot, index) => {
+        if (!slot.classList.contains('filled')) {
+          allFilled = false;
+        } else if (slot.dataset.placedLetter) {
+          if (slot.dataset.placedLetter !== currentWordLetters[index]) {
+            isCorrect = false;
+          }
+        }
+      });
+
+      if (allFilled) {
+        if (isCorrect) {
+          handleCorrectWord();
+        } else {
+          handleIncorrectWord();
+        }
+      }
+    }
+
+    function handleCorrectWord() {
+      honeyCount++;
+      document.getElementById('honeyCount').textContent = honeyCount;
+      document.getElementById('nextBtn').disabled = false;
+
+      const slots = document.querySelectorAll('.letter-slot');
+      slots.forEach(slot => slot.classList.add('correct'));
+
+      const beeContainer = document.getElementById('beeContainer');
+      beeContainer.classList.add('bee-celebrate');
+      setTimeout(() => beeContainer.classList.remove('bee-celebrate'), 600);
+
+      const feedback = document.getElementById('feedbackMessage');
+      feedback.textContent = 'Excellent! 🌟';
+      feedback.classList.add('show');
+      setTimeout(() => feedback.classList.remove('show'), 1000);
+
+      createHoneyDrops();
+    }
+
+    function handleIncorrectWord() {
+      const flowerContainer = document.getElementById('flowerContainer');
+      flowerContainer.classList.add('flower-wiggle');
+      setTimeout(() => flowerContainer.classList.remove('flower-wiggle'), 500);
+
+      const slots = document.querySelectorAll('.letter-slot');
+      slots.forEach(slot => {
+        if (slot.dataset.placedLetter && slot.dataset.placedLetter !== currentWordLetters[parseInt(slot.dataset.index)]) {
+          slot.textContent = '';
+          slot.classList.remove('filled');
+          
+          const letter = slot.dataset.placedLetter;
+          delete slot.dataset.placedLetter;
+          
+          const tiles = document.querySelectorAll('.letter-tile');
+          tiles.forEach(tile => {
+            if (tile.dataset.letter === letter && tile.classList.contains('placed')) {
+              tile.classList.remove('placed');
+            }
+          });
+        }
+      });
+    }
+
+    function createHoneyDrops() {
+      const container = document.querySelector('.game-area');
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const drop = document.createElement('div');
+          drop.className = 'honey-drop';
+          drop.textContent = '🍯';
+          drop.style.left = `${30 + Math.random() * 40}%`;
+          drop.style.top = `${20 + Math.random() * 20}%`;
+          container.appendChild(drop);
+          
+          setTimeout(() => drop.remove(), 1000);
+        }, i * 100);
+      }
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      initializeWord();
+    });
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      honeyCount = 0;
+      currentRound = 1;
+      round1Index = 0;
+      round2Index = 0;
+      document.getElementById('honeyCount').textContent = honeyCount;
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      initializeWord();
+    });
+
+    document.getElementById('letterSlots').addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    document.getElementById('letterSlots').addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (e.target.classList.contains('letter-slot') && !e.target.classList.contains('filled') && draggedElement) {
+        placeLetter(e.target, draggedElement);
+      }
+    });
+
+    async function onConfigChange(config) {
+      document.getElementById('gameTitle').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('instructionText').textContent = config.instruction_text || defaultConfig.instruction_text;
+      document.getElementById('honeyLabel').textContent = config.honey_jar_label || defaultConfig.honey_jar_label;
+      document.getElementById('nextBtnText').textContent = config.next_button_text || defaultConfig.next_button_text;
+      document.getElementById('restartBtnText').textContent = config.restart_button_text || defaultConfig.restart_button_text;
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["game_title", config.game_title || defaultConfig.game_title],
+          ["instruction_text", config.instruction_text || defaultConfig.instruction_text],
+          ["honey_jar_label", config.honey_jar_label || defaultConfig.honey_jar_label],
+          ["next_button_text", config.next_button_text || defaultConfig.next_button_text],
+          ["restart_button_text", config.restart_button_text || defaultConfig.restart_button_text]
+        ])
+      });
+    }
+
+    initializeWord();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a70cf0d52c8ee86',t:'MTc2NDU3MzQ4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
