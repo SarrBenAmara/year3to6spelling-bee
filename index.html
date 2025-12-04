@@ -24,9 +24,9 @@
 /* ⭐ LOGO — added */
     .page-logo {
       position: fixed;
-      top: 80px;
-      right: 80px;
-      width: 200px;
+      top: 20px;
+      right: 50px;
+      width: 100px;
       height: auto;
       z-index: 999;
     }
@@ -36,8 +36,14 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      padding: 20px 20px 30px 20px;
+      padding: 15px;
       justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      .game-container {
+        padding: 20px 20px 30px 20px;
+      }
     }
 
     .header {
@@ -46,53 +52,95 @@
     }
 
     .game-title {
-      font-size: 2.2em;
+      font-size: 1.5em;
       color: #FFA500;
-      text-shadow: 3px 3px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
-      margin: 0 0 12px 0;
+      text-shadow: 2px 2px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
+      margin: 0 0 8px 0;
       font-weight: bold;
     }
 
+    @media (min-width: 768px) {
+      .game-title {
+        font-size: 2.2em;
+        text-shadow: 3px 3px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
+        margin: 0 0 12px 0;
+      }
+    }
+
     .instruction {
-      font-size: 1.1em;
+      font-size: 0.9em;
       color: #000000;
       background: rgba(255, 215, 0, 0.9);
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 8px 15px;
+      border-radius: 20px;
       display: inline-block;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      border: 3px solid #FFA500;
+      border: 2px solid #FFA500;
       font-weight: bold;
+    }
+
+    @media (min-width: 768px) {
+      .instruction {
+        font-size: 1.1em;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 3px solid #FFA500;
+      }
     }
 
     .score-board {
       position: absolute;
-      top: 120px;
-      left: 20px;
+      top: 90px;
+      left: 10px;
       background: rgba(255, 215, 0, 0.95);
-      padding: 15px 20px;
-      border-radius: 20px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      padding: 10px 12px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       text-align: center;
       z-index: 100;
-      border: 3px solid #FFA500;
+      border: 2px solid #FFA500;
+    }
+
+    @media (min-width: 768px) {
+      .score-board {
+        top: 120px;
+        left: 20px;
+        padding: 15px 20px;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        border: 3px solid #FFA500;
+      }
     }
 
     .honey-label {
-      font-size: 0.9em;
+      font-size: 0.7em;
       color: #000000;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       font-weight: bold;
     }
 
+    @media (min-width: 768px) {
+      .honey-label {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+    }
+
     .honey-count {
-      font-size: 2em;
+      font-size: 1.5em;
       color: #FFA500;
       font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 3px;
+    }
+
+    @media (min-width: 768px) {
+      .honey-count {
+        font-size: 2em;
+        gap: 5px;
+      }
     }
 
     .game-area {
@@ -107,16 +155,30 @@
 
     .bee-container {
       position: absolute;
-      top: 10%;
+      top: 5%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) scale(0.7);
       z-index: 50;
       animation: float 3s ease-in-out infinite;
     }
 
+    @media (min-width: 768px) {
+      .bee-container {
+        top: 10%;
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
     @keyframes float {
-      0%, 100% { transform: translateX(-50%) translateY(0px); }
-      50% { transform: translateX(-50%) translateY(-15px); }
+      0%, 100% { transform: translateX(-50%) translateY(0px) scale(0.7); }
+      50% { transform: translateX(-50%) translateY(-15px) scale(0.7); }
+    }
+
+    @media (min-width: 768px) {
+      @keyframes float {
+        0%, 100% { transform: translateX(-50%) translateY(0px) scale(1); }
+        50% { transform: translateX(-50%) translateY(-15px) scale(1); }
+      }
     }
 
     .bee-celebrate {
@@ -137,39 +199,70 @@
 
     .word-display {
       background: rgba(255, 255, 255, 0.95);
-      padding: 15px 25px;
-      border-radius: 25px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      margin-bottom: 20px;
+      padding: 12px 15px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
       display: inline-block;
+    }
+
+    @media (min-width: 768px) {
+      .word-display {
+        padding: 15px 25px;
+        border-radius: 25px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+      }
     }
 
     .letter-slots {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
+    @media (min-width: 768px) {
+      .letter-slots {
+        gap: 10px;
+      }
+    }
+
     .letter-slot {
-      width: 60px;
-      height: 70px;
-      border: 3px dashed #FFD700;
-      border-radius: 12px;
+      width: 45px;
+      height: 52px;
+      border: 2px dashed #FFD700;
+      border-radius: 10px;
       background: #FFF9E6;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2em;
+      font-size: 1.5em;
       font-weight: bold;
       color: #2C3E50;
       position: relative;
       transition: all 0.3s ease;
     }
 
+    @media (min-width: 768px) {
+      .letter-slot {
+        width: 60px;
+        height: 70px;
+        border: 3px dashed #FFD700;
+        border-radius: 12px;
+        font-size: 2em;
+      }
+    }
+
     .letter-slot.filled {
-      border: 3px solid #4CAF50;
+      border: 2px solid #4CAF50;
       background: #E8F5E9;
+    }
+
+    @media (min-width: 768px) {
+      .letter-slot.filled {
+        border: 3px solid #4CAF50;
+      }
     }
 
     .letter-slot.correct {
@@ -183,29 +276,48 @@
 
     .draggable-letters {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 15px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .draggable-letters {
+        gap: 12px;
+        margin-top: 15px;
+      }
     }
 
     .letter-tile {
-      width: 60px;
-      height: 70px;
+      width: 45px;
+      height: 52px;
       background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-      border: 3px solid #FF8C00;
-      border-radius: 12px;
+      border: 2px solid #FF8C00;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2em;
+      font-size: 1.5em;
       font-weight: bold;
       color: white;
-      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
       cursor: grab;
       user-select: none;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (min-width: 768px) {
+      .letter-tile {
+        width: 60px;
+        height: 70px;
+        border: 3px solid #FF8C00;
+        border-radius: 12px;
+        font-size: 2em;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
     }
 
     .letter-tile:hover {
@@ -233,16 +345,26 @@
     }
 
     .btn {
-      padding: 12px 30px;
-      font-size: 1.1em;
+      padding: 10px 20px;
+      font-size: 0.9em;
       font-weight: bold;
       border: none;
-      border-radius: 25px;
+      border-radius: 20px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       font-family: inherit;
-      margin: 0 8px;
+      margin: 0 5px;
+    }
+
+    @media (min-width: 768px) {
+      .btn {
+        padding: 12px 30px;
+        font-size: 1.1em;
+        border-radius: 25px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        margin: 0 8px;
+      }
     }
 
     .btn-next {
@@ -277,20 +399,32 @@
 
     .btn-home {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 10px;
+      left: 10px;
       background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
       color: white;
-      border: 3px solid #D32F2F;
-      padding: 12px 25px;
-      font-size: 1.1em;
+      border: 2px solid #D32F2F;
+      padding: 8px 15px;
+      font-size: 0.9em;
       font-weight: bold;
-      border-radius: 20px;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       font-family: inherit;
       z-index: 100;
+    }
+
+    @media (min-width: 768px) {
+      .btn-home {
+        top: 20px;
+        left: 20px;
+        border: 3px solid #D32F2F;
+        padding: 12px 25px;
+        font-size: 1.1em;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
     }
 
     .btn-home:hover {
@@ -376,52 +510,99 @@
 
     .start-content {
       background: rgba(255, 255, 255, 0.95);
-      padding: 40px;
-      border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      padding: 25px 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       text-align: center;
       max-width: 500px;
-      width: 100%;
-      border: 4px solid #FFA500;
+      width: 90%;
+      border: 3px solid #FFA500;
+    }
+
+    @media (min-width: 768px) {
+      .start-content {
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        border: 4px solid #FFA500;
+      }
     }
 
     .start-title {
-      font-size: 2.5em;
+      font-size: 1.8em;
       color: #FFA500;
-      text-shadow: 3px 3px 0 #000000;
-      margin: 0 0 30px 0;
+      text-shadow: 2px 2px 0 #000000;
+      margin: 0 0 20px 0;
       font-weight: bold;
+    }
+
+    @media (min-width: 768px) {
+      .start-title {
+        font-size: 2.5em;
+        text-shadow: 3px 3px 0 #000000;
+        margin: 0 0 30px 0;
+      }
     }
 
     .start-bee {
-      font-size: 4em;
-      margin-bottom: 20px;
+      font-size: 3em;
+      margin-bottom: 15px;
       animation: float 2s ease-in-out infinite;
     }
 
+    @media (min-width: 768px) {
+      .start-bee {
+        font-size: 4em;
+        margin-bottom: 20px;
+      }
+    }
+
     .name-input-group {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .name-input-group {
+        margin-bottom: 30px;
+      }
     }
 
     .name-label {
-      font-size: 1.2em;
+      font-size: 1em;
       color: #000000;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: block;
+    }
+
+    @media (min-width: 768px) {
+      .name-label {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
     }
 
     .name-input {
       width: 100%;
-      padding: 15px 20px;
-      font-size: 1.2em;
-      border: 3px solid #FFD700;
-      border-radius: 15px;
+      padding: 12px 15px;
+      font-size: 1em;
+      border: 2px solid #FFD700;
+      border-radius: 12px;
       font-family: inherit;
       text-align: center;
       background: #FFF9E6;
       color: #000000;
       font-weight: bold;
+    }
+
+    @media (min-width: 768px) {
+      .name-input {
+        padding: 15px 20px;
+        font-size: 1.2em;
+        border: 3px solid #FFD700;
+        border-radius: 15px;
+      }
     }
 
     .name-input:focus {
@@ -431,32 +612,56 @@
     }
 
     .round-selection-label {
-      font-size: 1.2em;
+      font-size: 1em;
       color: #000000;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       display: block;
+    }
+
+    @media (min-width: 768px) {
+      .round-selection-label {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+      }
     }
 
     .round-selection-buttons {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       justify-content: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .round-selection-buttons {
+        gap: 15px;
+        margin-bottom: 30px;
+      }
     }
 
     .btn-select-round {
-      padding: 15px 35px;
-      font-size: 1.3em;
+      padding: 12px 25px;
+      font-size: 1.1em;
       font-weight: bold;
-      border: 3px solid #FF8C00;
-      border-radius: 20px;
+      border: 2px solid #FF8C00;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
       font-family: inherit;
       background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
       color: #000000;
+    }
+
+    @media (min-width: 768px) {
+      .btn-select-round {
+        padding: 15px 35px;
+        font-size: 1.3em;
+        border: 3px solid #FF8C00;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
     }
 
     .btn-select-round:hover {
@@ -472,18 +677,28 @@
     }
 
     .btn-start-game {
-      padding: 18px 50px;
-      font-size: 1.4em;
+      padding: 14px 35px;
+      font-size: 1.2em;
       font-weight: bold;
       border: none;
-      border-radius: 25px;
+      border-radius: 20px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       font-family: inherit;
       background: linear-gradient(135deg, #4CAF50 0%, #45A049 100%);
       color: white;
-      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    @media (min-width: 768px) {
+      .btn-start-game {
+        padding: 18px 50px;
+        font-size: 1.4em;
+        border-radius: 25px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      }
     }
 
     .btn-start-game:hover {
@@ -499,14 +714,23 @@
     }
 
     .player-name-display {
-      font-size: 1.1em;
+      font-size: 0.9em;
       color: #000000;
       font-weight: bold;
       background: rgba(255, 215, 0, 0.3);
-      padding: 8px 15px;
-      border-radius: 15px;
+      padding: 6px 12px;
+      border-radius: 12px;
       display: inline-block;
-      margin-right: 10px;
+      margin-right: 8px;
+    }
+
+    @media (min-width: 768px) {
+      .player-name-display {
+        font-size: 1.1em;
+        padding: 8px 15px;
+        border-radius: 15px;
+        margin-right: 10px;
+      }
     }
 
 
@@ -537,7 +761,7 @@
     <div class="round-selection-label">
      Choose Your Round
     </div>
-    <div class="round-selection-buttons"><button class="btn-select-round selected" id="selectRound1">Round 1</button> <button class="btn-select-round" id="selectRound2">Round 2</button>
+    <div class="round-selection-buttons"><button class="btn-select-round selected" id="selectRound1">Round 1</button> <button class="btn-select-round" id="selectRound2">Round 2</button> <button class="btn-select-round" id="selectRound3">Round 3</button>
     </div><button class="btn-start-game" id="startGameBtn" disabled>Start Game 🚀</button>
    </div>
   </div>
@@ -598,12 +822,19 @@
       'passenger', 'dangerous', 'decorate', 'prepare', 'activity', 'stretch', 'athlete'
     ];
 
+    const round3Words = [
+      'ascend', 'analysis', 'hierarchy', 'emphasize', 'persuade', 'quotation',
+      'paragraph', 'judgement', 'consequence', 'competition', 'tournament',
+      'achievement', 'treacherous', 'advantageous', 'consciousness'
+    ];
+
     let currentRound = 1;
     let currentWord = '';
     let currentWordLetters = [];
     let honeyCount = 0;
     let round1Index = 0;
     let round2Index = 0;
+    let round3Index = 0;
     let draggedElement = null;
     let touchStartX = 0;
     let touchStartY = 0;
@@ -626,11 +857,16 @@
           return null;
         }
         return round1Words[round1Index++];
-      } else {
+      } else if (currentRound === 2) {
         if (round2Index >= round2Words.length) {
           return null;
         }
         return round2Words[round2Index++];
+      } else {
+        if (round3Index >= round3Words.length) {
+          return null;
+        }
+        return round3Words[round3Index++];
       }
     }
 
@@ -866,8 +1102,10 @@
       honeyCount = 0;
       if (currentRound === 1) {
         round1Index = 0;
-      } else {
+      } else if (currentRound === 2) {
         round2Index = 0;
+      } else {
+        round3Index = 0;
       }
       document.getElementById('honeyCount').textContent = honeyCount;
       document.getElementById('nextBtn').style.display = 'inline-block';
@@ -899,6 +1137,7 @@
     const startGameBtn = document.getElementById('startGameBtn');
     const selectRound1Btn = document.getElementById('selectRound1');
     const selectRound2Btn = document.getElementById('selectRound2');
+    const selectRound3Btn = document.getElementById('selectRound3');
     const startScreen = document.getElementById('startScreen');
 
     playerNameInput.addEventListener('input', (e) => {
@@ -916,12 +1155,21 @@
       selectedRound = 1;
       selectRound1Btn.classList.add('selected');
       selectRound2Btn.classList.remove('selected');
+      selectRound3Btn.classList.remove('selected');
     });
 
     selectRound2Btn.addEventListener('click', () => {
       selectedRound = 2;
       selectRound2Btn.classList.add('selected');
       selectRound1Btn.classList.remove('selected');
+      selectRound3Btn.classList.remove('selected');
+    });
+
+    selectRound3Btn.addEventListener('click', () => {
+      selectedRound = 3;
+      selectRound3Btn.classList.add('selected');
+      selectRound1Btn.classList.remove('selected');
+      selectRound2Btn.classList.remove('selected');
     });
 
     startGameBtn.addEventListener('click', startGame);
@@ -934,8 +1182,10 @@
       
       if (selectedRound === 1) {
         round1Index = 0;
-      } else {
+      } else if (selectedRound === 2) {
         round2Index = 0;
+      } else {
+        round3Index = 0;
       }
       
       document.getElementById('playerNameDisplay').textContent = '👤 ' + playerName;
@@ -948,6 +1198,7 @@
       honeyCount = 0;
       round1Index = 0;
       round2Index = 0;
+      round3Index = 0;
       document.getElementById('honeyCount').textContent = honeyCount;
       document.getElementById('nextBtn').style.display = 'inline-block';
       gameStarted = false;
@@ -973,5 +1224,5 @@
       });
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a70ec4c5459edce',t:'MTc2NDU3NDY4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a8951a475195bcc',t:'MTc2NDgzMDQ5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
